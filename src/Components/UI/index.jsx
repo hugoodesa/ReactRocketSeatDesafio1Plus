@@ -33,6 +33,7 @@ export const ButtonGenero = styled.button`
   border-radius: 5px;
   &:hover {
     color: yellow;
+    cursor: pointer;
   }
 `;
 
@@ -57,11 +58,9 @@ export const MenuCentral = styled.div`
   background-color: #474040;
   height: 100%;
   width: 75%;
-  flex-direction: row;
-  align-items: baseline;
-  align-content: space-between;
-  align-items: center;
+  display: flex;
   justify-content: center;
+  align-items: flex-start;
   flex-wrap: wrap;
   border: solid 1px red;
 `;
@@ -73,10 +72,48 @@ export const CardFile = styled.div`
   font-weight: lighter;
   text-align: center;
   width: 15%;
-  height: 30%;
-  border: solid 1px blue;
-  display: inline-flex;
+  height: 35%;
   align-items: center;
   justify-content: center;
   margin: 20px;
+  position: relative;
+`;
+
+export const CardFileCartaz = styled.div`
+  height: 80%;
+  width: 100%;
+  flex-direction: column;
+`;
+
+export const CardFileCartazImagem = styled.img`
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+`;
+
+export const Sobrepor = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin-top: -280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &:hover {
+    background-color: #ff634736;
+    cursor: pointer;
+  }
+`;
+
+export const CardInformacoes = styled.div`
+  height: 19%;
+  width: 100%;
+  flex-direction: column;
+  background-color: tomato;
+  color: white;
+  display: inline-flex;
+  justify-content: center;
+  &:hover {
+    background-color: #fa5133;
+  }
 `;

@@ -1,50 +1,60 @@
-import logo from "./logo.svg";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
-import {
-  ButtonGenero,
-  CardFile,
-  Categoria,
-  Container,
-  Genero,
-  MenuCentral,
-  MenuLateral,
-} from "./Components/UI/inde";
-import { fetchGenders } from "./Api/api";
+import { Categoria, Container, Genero, MenuCentral } from "./Components/UI";
+import { fetchGenders, fetchMovies } from "./Api/api";
+import MenuCategorias from "./Components/MenuCategorias";
+import ListaCategorias from "./Components/ListaCategorias";
+import ListaFilmes from "./Components/ListaFilmes";
 
 function App() {
+  const [generos, setGeneros] = useState([]);
+
+  const [generosSelecionado, setGeneroSelecionado] = useState({
+    id: 1,
+    titulo: "",
+  });
+
+  const [filmes, setFilmes] = useState([]);
+
+  //get generos
   useEffect(() => {
     const getGenders = async () => {
       const genders = await fetchGenders();
-      console.log(genders);
+
+      setGeneros(genders);
+      setGeneroSelecionado({ id: genders[0].id, titulo: genders[0].title });
     };
 
     getGenders();
   }, []);
 
+  //get filmes
+  useEffect(() => {
+    const getMovies = async () => {
+      const movies = await fetchMovies(generosSelecionado.id);
+
+      setFilmes(movies);
+
+      console.log(generosSelecionado.id);
+    };
+
+    getMovies();
+  }, [generosSelecionado]);
+
   return (
     <Container>
-      <MenuLateral>
-        <Categoria>
-          Wath<span style={{ color: "tomato" }}>ME</span>
-        </Categoria>
-        <ButtonGenero>Teste</ButtonGenero>
-        <ButtonGenero>Teste</ButtonGenero>
-        <ButtonGenero>Teste</ButtonGenero>
-        <ButtonGenero>Teste</ButtonGenero>
-        <ButtonGenero>Teste</ButtonGenero>
-        <ButtonGenero>Teste</ButtonGenero>
-      </MenuLateral>
+      <MenuCategorias>
+        <ListaCategorias
+          categorias={generos}
+          setCategoriaAtivada={setGeneroSelecionado}
+        />
+      </MenuCategorias>
+
       <MenuCentral>
         <Categoria>Categoria :</Categoria>
-        <Genero>Ação</Genero>
-        <CardFile>Teste</CardFile>
-        <CardFile>Teste</CardFile>
-        <CardFile>Teste</CardFile>
-        <CardFile>Teste</CardFile>
-        <CardFile>Teste</CardFile>
-        <CardFile>Teste</CardFile>
-        <CardFile>Teste</CardFile>
+        <Genero>{generosSelecionado.titulo}</Genero>
+
+        <ListaFilmes listaFilmes={filmes} />
       </MenuCentral>
     </Container>
   );
